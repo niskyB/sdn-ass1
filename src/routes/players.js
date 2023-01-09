@@ -37,12 +37,14 @@ playerRouter.get('/:playerId', (req, res, next) => {
 });
 
 playerRouter.post('/', (req, res, next) => {
-    const newPlayer = {
-        id: players.length + 1,
-        name: req.body.name
-    };
-    players.push(newPlayer);
-    res.send(newPlayer);
+    for (const player of req.body.players) {
+        const newPlayer = {
+            id: players.length + 1,
+            name: player.name
+        };
+        players.push(newPlayer);
+    }
+    res.send(req.body.players);
 });
 
 playerRouter.post('/:playerId', (req, res, next) => {
@@ -58,6 +60,21 @@ playerRouter.post('/:playerId', (req, res, next) => {
     res.send(newPlayer);
 });
 
+playerRouter.put('/', (req, res, next) => {
+    for (const player of req.body.players) {
+        const existingPlayer = players.find(n => n.id === player.id);
+        if (!existingPlayer) {
+            res.statusCode = 404;
+            return res.send('The player with the given ID was not found.');
+        }
+    }
+    for (const player of req.body.players) {
+        const existingPlayer = players.find(n => n.id === player.id);
+        existingPlayer.name = player.name;
+    }
+    res.send(req.body.players);
+});
+
 playerRouter.put('/:playerId', (req, res, next) => {
     const player = players.find(n => n.id === parseInt(req.params.playerId));
     if (!player) {
@@ -66,6 +83,22 @@ playerRouter.put('/:playerId', (req, res, next) => {
     }
     player.name = req.body.name;
     res.send(player);
+});
+
+playerRouter.delete('/', (req, res, next) => {
+    for (const player of req.body.players) {
+        const existingPlayer = players.find(n => n.id === player.id);
+        if (!existingPlayer) {
+            res.statusCode = 404;
+            return res.send('The player with the given ID was not found.');
+        }
+    }
+    for (const player of req.body.players) {
+        const existingPlayer = players.find(n => n.id === player.id);
+        const index = players.indexOf(existingPlayer);
+        players.splice(index, 1);
+    }
+    res.send(req.body.players);
 });
 
 playerRouter.delete('/:playerId', (req, res, next) => {
