@@ -98,7 +98,7 @@ playerRouter.delete('/', (req, res, next) => {
         const index = players.indexOf(existingPlayer);
         players.splice(index, 1);
     }
-    res.send(req.body.players);
+    res.send('Players deleted');
 });
 
 playerRouter.delete('/:playerId', (req, res, next) => {
@@ -109,7 +109,7 @@ playerRouter.delete('/:playerId', (req, res, next) => {
     }
     const index = players.indexOf(player);
     players.splice(index, 1);
-    res.send(player);
+    res.send('Player deleted');
 });
 
 module.exports = playerRouter;

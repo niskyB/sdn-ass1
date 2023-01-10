@@ -68,6 +68,10 @@ nationRouter.put('/:nationId', (req, res, next) => {
     res.send(nation);
 });
 
+nationRouter.put('/', (req, res, next) => {
+    res.send('PUT operation not supported on /nations');
+});
+
 nationRouter.delete('/:nationId', (req, res, next) => {
     const nation = nations.find(n => n.id === parseInt(req.params.nationId));
     if (!nation) {
@@ -76,7 +80,11 @@ nationRouter.delete('/:nationId', (req, res, next) => {
     }
     const index = nations.indexOf(nation);
     nations.splice(index, 1);
-    res.send(nation);
+    res.send("Delete nation successful");
+});
+
+nationRouter.delete('/', (req, res, next) => {
+    res.send('DELETE operation not supported on /nations');
 });
 
 module.exports = nationRouter;
