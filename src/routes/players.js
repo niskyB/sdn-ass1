@@ -53,7 +53,7 @@ playerRouter.post('/:playerId', (req, res, next) => {
         return res.send('Invalid player ID');
     }
     const newPlayer = {
-        id: req.params.playerId,
+        id: +req.params.playerId,
         name: req.body.name
     };
     players.push(newPlayer);

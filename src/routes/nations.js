@@ -51,7 +51,7 @@ nationRouter.post('/:nationId', (req, res, next) => {
         return res.send('Invalid nation ID');
     }
     const newNations = {
-        id: req.params.nationId,
+        id: +req.params.nationId,
         name: req.body.name
     };
     nations.push(newNations);
